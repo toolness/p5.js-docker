@@ -8,7 +8,7 @@ website:
 p5:
   build: .
   working_dir: /var/p5.js
-  command: /var/p5.js/p5-website-bridge/start.sh
+  command: node /var/p5.js/p5-website-bridge/start.js
   volumes:
     - ./p5.js:/var/p5.js/
     - ./p5.js-website:/var/www/html/
