@@ -42,6 +42,7 @@ instructions in a **Docker Quickstart Terminal**.
 To start everything up, run:
 
 ```
+export HOST_UID=$UID
 docker-compose up
 ```
 
@@ -64,13 +65,6 @@ reference documentation and libraries will be rebuilt and made visible
 on the website.
 
 ## Limitations and Common Issues
-
-* Because all the build scripts are running in a Docker container and
-  that container is running as the root user, files created in the
-  Docker container will be owned by root, not as your current user.
-  This can make things a bit confusing sometimes. The situation will
-  hopefully become easier once [Docker issue #7198][docker-7198] is
-  fixed.
 
 * If you're running Docker on OS X or Windows, the hard work is all
   being done behind-the-scenes by a Linux-based virtual machine. The
@@ -100,5 +94,4 @@ Now you can delete the repository directory.
   [Docker Compose]: https://docs.docker.com/compose/install/
   [docker-osx]: https://docs.docker.com/mac/step_one/
   [docker-windows]: https://docs.docker.com/windows/step_one/
-  [docker-7198]: https://github.com/docker/docker/issues/7198
   [Docker Machine]: https://docs.docker.com/machine/
