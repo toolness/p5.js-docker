@@ -11,6 +11,10 @@ var WEBSITE_DIR = '/var/www/html';
 var WEBSITE_JS_DIR = WEBSITE_DIR + '/js';
 var WEBSITE_REFERENCE_DIR = WEBSITE_DIR + '/reference';
 
+// Not sure why chalk thinks we don't support color inside
+// 'docker-compose up', but we usually do, so force it on.
+chalk.enabled = true;
+
 function run(cmdline) {
   console.log("Running " + chalk.bold(JSON.stringify(cmdline)) + "...");
   try {
@@ -87,18 +91,17 @@ if (process.argv[2] !== '--no-init') init();
 // ASCII art taken from:
 //
 // https://github.com/processing/p5.js/blob/master/src/core/error_helpers.js
-console.log(chalk.magenta(
-  '    _ \n'+
-  ' /\\| |/\\ \n'+
-  ' \\ ` \' /  \n'+
-  ' / , . \\  \n'+
-  ' \\/|_|\\/ '
-) +
-  '\n\n> p5.js says: Welcome! '+
-  'This is your affable Docker container.\n'
-);
+
+console.log(chalk.magenta('    _ '));
+console.log(chalk.magenta(' /\\| |/\\ '));
+console.log(chalk.magenta(' \\ ` \' /  '));
+console.log(chalk.magenta(' / , . \\  '));
+console.log(chalk.magenta(' \\/|_|\\/ '));
 
 console.log([
+  "",
+  "> p5.js says: Welcome! This is your friendly Docker container.",
+  "",
   "If you're on Linux, you should be able to visit ",
   "http://localhost:8000/ directly to access the p5 ",
   "website. If you're on OS X or Windows, you'll",
