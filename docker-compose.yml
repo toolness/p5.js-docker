@@ -1,9 +1,9 @@
 website:
   image: php:5.6-apache
   volumes:
-    - ./p5.js-website:/var/www/html/
-    - ./p5.js:/var/p5.js
-    - ./php/etc:/usr/local/etc/php
+    - ./p5.js-website:/var/www/html/:ro
+    - ./p5.js:/var/p5.js:ro
+    - ./php/etc:/usr/local/etc/php:ro
   ports:
     - "8000:80"
   environment:
