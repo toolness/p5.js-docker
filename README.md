@@ -1,6 +1,10 @@
 This experimental Docker setup for p5.js and its website potentially
 makes development easier.
 
+## Setup
+
+### Step 1: Clone Repositories
+
 First clone this repository, and inside it, 
 clone the [p5.js][] and [p5.js-website][] repositories:
 
@@ -11,18 +15,18 @@ git clone git@github.com:processing/p5.js.git
 git clone git@github.com:processing/p5.js-website.git
 ```
 
-## Setup
+### Step 2: Install Docker
 
-### OS X
+#### OS X
 
 Install [Docker Toolbox][docker-osx] and run the rest of these
 instructions in a **Docker Quickstart Terminal**.
 
-### Linux
+#### Linux
 
 Install [Docker][docker-linux] and [Docker Compose][].
 
-### Windows
+#### Windows
 
 At the time of this writing, I recommend manually setting up
 a Linux virtual machine and using Docker inside that, as
@@ -32,7 +36,7 @@ However, if you're up for an adventure, try installing
 [Docker Toolbox][docker-windows] and run the rest of these
 instructions in a **Docker Quickstart Terminal**.
 
-## Startup
+### Step 3: Start Everything Up
 
 To start everything up, run:
 
@@ -57,6 +61,13 @@ likely have to visit port 8000 on the IP address given to you by
 Whenever you edit any files in the p5.js source code, any related
 reference documentation and libraries will be rebuilt and made visible
 on the website.
+
+## Limitations and Common Issues
+
+Because all the build scripts are running in a Docker container and
+that container is running as the root user, files created in the
+Docker container will be owned by root, not as your current user.
+This can make things a bit confusing sometimes.
 
 <!-- Links -->
 
