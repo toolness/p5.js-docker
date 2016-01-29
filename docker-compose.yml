@@ -3,8 +3,11 @@ website:
   volumes:
     - ./p5.js-website:/var/www/html/
     - ./p5.js:/var/p5.js
+    - ./php/etc:/usr/local/etc/php
   ports:
     - "8000:80"
+  environment:
+    - PHP_P5_SITE_ROOT=/
 p5:
   build: .
   working_dir: /var/p5.js
