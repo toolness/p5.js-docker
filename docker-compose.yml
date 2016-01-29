@@ -4,7 +4,7 @@ website:
     - ./p5.js-website:/var/www/html/
     - ./p5.js:/var/p5.js
   ports:
-    - "80:80"
+    - "8000:80"
 p5:
   build: .
   working_dir: /var/p5.js
