@@ -16,6 +16,15 @@ Then start everything up:
 docker-compose up
 ```
 
+You'll have to wait a while as various things are configured and installed,
+but eventually you should see the text:
+
+```
+p5_1      | Waiting for source files to change...
+```
+
+At this point, you're all set!
+
 If you're on Linux, you should be able to visit http://localhost:8000/
 directly to access the p5 website. If you're on OS X or Windows, you'll
 likely have to visit port 8000 on the IP address given to you by
