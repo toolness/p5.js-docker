@@ -30,7 +30,8 @@ Install [Docker][docker-linux] and [Docker Compose][].
 
 At the time of this writing, I recommend manually setting up
 a Linux virtual machine and using Docker inside that, as
-Docker Compose for Windows still has lots of limitations.
+Docker Compose for Windows still has lots of limitations. This is
+what I do on my Windows desktop.
 
 However, if you're up for an adventure, try installing
 [Docker Toolbox][docker-windows] and run the rest of these
@@ -64,10 +65,32 @@ on the website.
 
 ## Limitations and Common Issues
 
-Because all the build scripts are running in a Docker container and
-that container is running as the root user, files created in the
-Docker container will be owned by root, not as your current user.
-This can make things a bit confusing sometimes.
+* Because all the build scripts are running in a Docker container and
+  that container is running as the root user, files created in the
+  Docker container will be owned by root, not as your current user.
+  This can make things a bit confusing sometimes. The situation will
+  hopefully become easier once [Docker issue #7198][docker-7198] is
+  fixed.
+
+* If you're running Docker on OS X or Windows, the hard work is all
+  being done behind-the-scenes by a Linux-based virtual machine. The
+  software used to communicate between your OS and the VM is called
+  [Docker Machine][]. This indirection can sometimes cause
+  difficulties.
+
+## Uninstalling
+
+If you decide this solution isn't for you, you'll want to run a few
+commands to free up some Docker resources that exist outside of the
+repository directory. From the root of the repository, run:
+
+```
+docker-compose stop
+docker-compose rm
+docker rmi p5jsdocker_p5
+```
+
+Now you can delete the repository directory.
 
 <!-- Links -->
 
@@ -77,3 +100,5 @@ This can make things a bit confusing sometimes.
   [Docker Compose]: https://docs.docker.com/compose/install/
   [docker-osx]: https://docs.docker.com/mac/step_one/
   [docker-windows]: https://docs.docker.com/windows/step_one/
+  [docker-7198]: https://github.com/docker/docker/issues/7198
+  [Docker Machine]: https://docs.docker.com/machine/
