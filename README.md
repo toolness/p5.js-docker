@@ -71,6 +71,14 @@ on the website.
   [Docker Machine][]. This indirection can sometimes cause
   difficulties.
 
+  For instance, if your development environment suddenly loses its
+  internet connection, try the following:
+
+  ```
+  docker-machine stop default
+  docker-machine start default
+  ```
+
 ## Uninstalling
 
 If you decide this solution isn't for you, you'll want to run a few
