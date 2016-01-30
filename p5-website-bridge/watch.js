@@ -1,7 +1,13 @@
 var child_process = require('child_process');
+var url = require('url');
 var chalk = require('chalk');
 var watch = require('node-watch');
 
+var WEBSITE_PORT = process.env.WEBSITE_PORT;
+var DOCKER_HOST = process.env.DOCKER_HOST;
+var WEBSITE_HOSTNAME = DOCKER_HOST ? url.parse(DOCKER_HOST).hostname
+                                   : "localhost";
+var WEBSITE_URL = "http://" + WEBSITE_HOSTNAME + ":" + WEBSITE_PORT;
 var P5_DIR = '/var/p5.js';
 var P5_YUIDOC_THEME_DIR = P5_DIR + '/docs/yuidoc-p5-theme';
 var P5_YUIDOC_THEME_SRC_DIR = P5_DIR + '/docs/yuidoc-p5-theme-src';
@@ -102,11 +108,13 @@ console.log([
   "",
   "> p5.js says: Welcome! This is your friendly Docker container.",
   "",
-  "If you're on Linux, you should be able to visit ",
-  "http://localhost:8000/ directly to access the p5 ",
-  "website. If you're on OS X or Windows, you'll",
-  "likely have to visit port 8000 on the IP address ",
-  "given to you by `docker-machine ip default`.",
+  "To view your development build of the p5 website, visit:",
+  ""
+].join('\n'));
+
+console.log(chalk.underline(WEBSITE_URL));
+
+console.log([
   "",
   "Whenever you edit any files in the p5.js source ",
   "code, any related reference documentation and ",

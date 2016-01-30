@@ -18,4 +18,6 @@ p5:
     - ./p5.js-website:/var/www/html/
     - ./p5-website-bridge:/var/p5.js/p5-website-bridge/
   environment:
+    - DOCKER_HOST
+    - WEBSITE_PORT=8000
     - HOST_USER=$USER
