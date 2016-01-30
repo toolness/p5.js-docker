@@ -1,14 +1,9 @@
+var fs = require('fs');
+
 var putil = require('./process-util');
 
-var HOST_UID = parseInt(process.env.HOST_UID);
+var HOST_UID = fs.statSync('/var/p5.js').uid;
 var HOST_USER = process.env.HOST_USER || 'code_executor_user';
-
-if (isNaN(HOST_UID)) {
-  console.log("Error! The HOST_UID environment variable is not set.");
-  console.log("Please run the following on your host system:\n");
-  console.log("export HOST_UID=$UID");
-  process.exit(1);
-}
 
 if (HOST_UID !== process.getuid()) {
   if (!putil.successSync('id -u ' + HOST_USER)) {

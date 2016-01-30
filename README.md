@@ -42,7 +42,6 @@ instructions in a **Docker Quickstart Terminal**.
 To start everything up, run:
 
 ```
-export HOST_UID=$UID
 docker-compose up
 ```
 

@@ -18,8 +18,4 @@ p5:
     - ./p5.js-website:/var/www/html/
     - ./p5-website-bridge:/var/p5.js/p5-website-bridge/
   environment:
-    # Argh, bash doesn't export the UID environment variable, so the
-    # user will have to manually export it.
-    - HOST_UID
-    # bash exports USER, so at least that part can be automated.
     - HOST_USER=$USER
