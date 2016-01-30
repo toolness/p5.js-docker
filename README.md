@@ -1,6 +1,40 @@
 This experimental Docker setup for p5.js and its website potentially
 makes development easier.
 
+## Why Is This Useful?
+
+From [What is Docker?][]:
+
+> Docker allows you to package an application with all of its
+> dependencies into a standardized unit for software development.
+
+In short, it means that getting people set up with a development
+environment, as well as deploying software to a webserver, can
+*potentially* be made dramatically easier.
+
+While developing for p5.js itself is already straightforward, contributing
+to its website is not quite as easy, for a few reasons:
+
+* The website contains a number of assets created by p5.js's toolchain,
+  such as the reference documentation and p5.js itself, but exactly
+  *how* those assets are copied over is complex and undocumented. Even
+  if it were documented, properly configuring the "bridge" between the
+  two repositories could still be error-prone.
+
+* The website currently uses an entirely different technology stack (PHP)
+  from p5.js's toolchain (node). This means extra setup and configuration
+  time for a development environment.
+
+This doesn't just make contributing difficult. It also means that it's
+challenging to set up a mirror of p5js.org on a local area network,
+which could be useful for events where internet connectivity is slow or
+inconsistent.
+
+This experiment aims to alleviate these problems. Whether it actually
+succeeds is dependent partly on how short this README is, and whether
+the learning curve for Docker is gentler than that of properly
+configuring the two repositories manually.
+
 ## Setup
 
 ### Step 1: Clone Repositories
@@ -52,16 +86,48 @@ but eventually you should see the text:
 p5_1      | Waiting for source files to change...
 ```
 
-At this point, you're all set!
-
-If you're on Linux, you should be able to visit http://localhost:8000/
-directly to access the p5 website. If you're on OS X or Windows, you'll
-likely have to visit port 8000 on the IP address given to you by
-`docker-machine ip default`.
+At this point, you're all set. A few lines above this message will contain
+a URL for you to visit. At that location will be your personal copy
+of the p5 website.
 
 Whenever you edit any files in the p5.js source code, any related
 reference documentation and libraries will be rebuilt and made visible
 on the website.
+
+## Editing Files
+
+See the [p5.js development overview][p5-dev-overview] for details on
+the structure of the p5.js repository.
+
+In general, the structure of the website is pretty intuitive: each page
+on the site can be found on your filesystem by its relative URL. However,
+the following files and directories shouldn't be directly edited by
+you, as they are actually copied over from the p5.js repository
+automatically whenever you change one of their source files:
+
+* `p5.js-website/reference/` should not be edited directly. This reference
+  documentation actually contains material from a variety of sources:
+
+  * The individual p5 functions and variables are all documented next
+    to their definition in the p5 source code.
+  * The overall HTML structure of the reference, as well as some
+    static assets, are contained in `p5.js/docs/yuidoc-p5-theme`.
+  * The JavaScript code that powers the reference is contained in
+    `p5.js/docs/yuidoc-p5-theme-src`.
+
+* `p5.js-website/js/p5.*.js` files should not be edited directly, as
+  they're copied over from the p5.js repository automatically.
+
+So if you ever need to edit any of those files, edit their sources in the
+p5.js repository instead: the build system will automatically detect your
+changes and reflect them on the website as needed.
+
+## Other Tasks
+
+If you need to run a `grunt` task in the p5.js repository, just use
+`docker-compose run p5 grunt`.
+
+Need to run `npm`? Try `docker-compose run p5 npm`.
 
 ## Limitations and Common Issues
 
@@ -97,8 +163,10 @@ Now you can delete the repository directory.
 
   [p5.js]: https://github.com/processing/p5.js
   [p5.js-website]: https://github.com/processing/p5.js-website
+  [What is Docker?]: https://www.docker.com/what-docker
   [docker-linux]: https://docs.docker.com/linux/
   [Docker Compose]: https://docs.docker.com/compose/install/
   [docker-osx]: https://docs.docker.com/mac/step_one/
   [docker-windows]: https://docs.docker.com/windows/step_one/
   [Docker Machine]: https://docs.docker.com/machine/
+  [p5-dev-overview]: https://github.com/processing/p5.js/wiki/Development#overview
