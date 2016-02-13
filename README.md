@@ -124,6 +124,12 @@ So if you ever need to edit any of those files, edit their sources in the
 p5.js repository instead: the build system will automatically detect your
 changes and reflect them on the website as needed.
 
+## Running Tests
+
+Your entire p5.js checkout is exposed on your web server under the
+`/p5.js/` path. Just browse there and you'll see a browseable index
+of all files and folders in your checkout.
+
 ## Other Tasks
 
 If you need to run a `grunt` task in the p5.js repository, just use

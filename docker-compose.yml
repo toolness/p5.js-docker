@@ -3,6 +3,7 @@ website:
   volumes:
     - ./p5.js-website:/var/www/html/:ro
     - ./p5.js:/var/p5.js:ro
+    - ./apache2:/etc/apache2/conf-enabled:ro
   ports:
     - "8000:80"
   environment:
