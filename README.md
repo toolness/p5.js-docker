@@ -1,6 +1,8 @@
 This experimental Docker setup for p5.js and its website potentially
 makes development easier.
 
+<img src="https://cloud.githubusercontent.com/assets/124687/13028015/5883c79a-d230-11e5-97cd-0f4d259cf5d8.png">
+
 ## Why Is This Useful?
 
 From [What is Docker?][]:
