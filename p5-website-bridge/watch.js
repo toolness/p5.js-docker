@@ -41,6 +41,8 @@ function rebuild_docs() {
   console.log("Copying p5 docs to website...");
   run('rm -rf ' + WEBSITE_REFERENCE_DIR);
   run('cp -R docs/reference ' + WEBSITE_REFERENCE_DIR);
+  run('cp ' + WEBSITE_REFERENCE_DIR + '/data.json ' +
+      WEBSITE_REFERENCE_DIR + '/data.min.json');
 }
 
 function rebuild_src() {
@@ -53,8 +55,10 @@ function rebuild_src() {
 
 function copy_addons() {
   console.log("Copying p5 addons to website...");
-  run('cp ' + P5_ADDONS_DIR + '/p5.sound.js ' + WEBSITE_JS_DIR);
-  run('cp ' + P5_ADDONS_DIR + '/p5.dom.js ' + WEBSITE_JS_DIR);
+  run('cp ' + P5_ADDONS_DIR + '/p5.sound.js ' +
+      WEBSITE_JS_DIR + '/p5.sound.min.js');
+  run('cp ' + P5_ADDONS_DIR + '/p5.dom.js ' +
+      WEBSITE_JS_DIR + '/p5.dom.min.js');
 }
 
 function rebuild_yuidoc_theme() {
