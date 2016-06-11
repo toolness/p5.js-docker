@@ -2,6 +2,7 @@ var child_process = require('child_process');
 var url = require('url');
 var chalk = require('chalk');
 var watch = require('node-watch');
+var debounce = require('lodash.debounce');
 
 var WEBSITE_PORT = process.env.WEBSITE_PORT;
 var DOCKER_HOST = process.env.DOCKER_HOST;
@@ -13,10 +14,10 @@ var P5_YUIDOC_THEME_DIR = P5_DIR + '/docs/yuidoc-p5-theme';
 var P5_YUIDOC_THEME_SRC_DIR = P5_DIR + '/docs/yuidoc-p5-theme-src';
 var P5_SRC_DIR = P5_DIR + '/src';
 var P5_ADDONS_DIR = P5_DIR + '/lib/addons';
-var GENERATED_YUIDOC_THEME = P5_YUIDOC_THEME_DIR + '/assets/js/reference.js';
 var WEBSITE_DIR = '/var/www/html';
 var WEBSITE_JS_DIR = WEBSITE_DIR + '/js';
 var WEBSITE_REFERENCE_DIR = WEBSITE_DIR + '/reference';
+var DEBOUNCE_WAIT_MS = 100;
 
 // Not sure why chalk thinks we don't support color inside
 // 'docker-compose up', but we usually do, so force it on.
@@ -74,31 +75,31 @@ function init() {
   copy_addons();
 }
 
+function debounced_watch(file, fn) {
+  watch(file, debounce(fn, DEBOUNCE_WAIT_MS));
+}
+
 function watch_everything() {
   console.log("Waiting for source files to change...");
 
-  watch(P5_ADDONS_DIR, function() {
+  debounced_watch(P5_ADDONS_DIR, function() {
     copy_addons();
     rebuild_docs();
   });
 
-  watch(P5_SRC_DIR, function() {
+  debounced_watch(P5_SRC_DIR, function() {
     rebuild_src();
     rebuild_docs();
   });
 
-  watch(P5_YUIDOC_THEME_DIR, function(file) {
-    if (file.indexOf(GENERATED_YUIDOC_THEME) === 0) {
-      // We were just triggered by rebuild_yuidoc_theme(); our own code
-      // will handle rebuilding these docs to avoid multiple rebuilds.
-      return;
-    }
+  debounced_watch(P5_YUIDOC_THEME_DIR, function() {
     rebuild_docs();
   });
 
-  watch(P5_YUIDOC_THEME_SRC_DIR, function() {
+  debounced_watch(P5_YUIDOC_THEME_SRC_DIR, function() {
     rebuild_yuidoc_theme();
-    rebuild_docs();
+    // rebuild_docs() will be automatically triggered by our other
+    // watchers, so don't call it ourselves.
   });
 }
 
