@@ -13,6 +13,7 @@ var P5_YUIDOC_THEME_DIR = P5_DIR + '/docs/yuidoc-p5-theme';
 var P5_YUIDOC_THEME_SRC_DIR = P5_DIR + '/docs/yuidoc-p5-theme-src';
 var P5_SRC_DIR = P5_DIR + '/src';
 var P5_ADDONS_DIR = P5_DIR + '/lib/addons';
+var GENERATED_YUIDOC_THEME = P5_YUIDOC_THEME_DIR + '/assets/js/reference.js';
 var WEBSITE_DIR = '/var/www/html';
 var WEBSITE_JS_DIR = WEBSITE_DIR + '/js';
 var WEBSITE_REFERENCE_DIR = WEBSITE_DIR + '/reference';
@@ -86,7 +87,12 @@ function watch_everything() {
     rebuild_docs();
   });
 
-  watch(P5_YUIDOC_THEME_DIR, function() {
+  watch(P5_YUIDOC_THEME_DIR, function(file) {
+    if (file.indexOf(GENERATED_YUIDOC_THEME) === 0) {
+      // We were just triggered by rebuild_yuidoc_theme(); our own code
+      // will handle rebuilding these docs to avoid multiple rebuilds.
+      return;
+    }
     rebuild_docs();
   });
 
