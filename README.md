@@ -139,19 +139,37 @@ Need to run `npm`? Try `docker-compose run p5 npm`.
 
 ## Limitations and Common Issues
 
-* If you're running Docker on OS X or Windows, the hard work is all
-  being done behind-the-scenes by a Linux-based virtual machine. The
-  software used to communicate between your OS and the VM is called
-  [Docker Machine][]. This indirection can sometimes cause
-  difficulties.
+If you're running Docker on OS X or Windows, the hard work is 
+being done behind-the-scenes by a Linux-based virtual machine. The
+software used to communicate between your OS and the VM
+is called [Docker Machine][]. This indirection can sometimes cause
+difficulties. For example:
 
-  For instance, if your development environment suddenly loses its
-  internet connection, try the following:
+  * If your development environment suddenly loses its
+    internet connection, try the following:
 
-  ```
-  docker-machine stop default
-  docker-machine start default
-  ```
+    ```
+    docker-machine stop default
+    docker-machine start default
+    ```
+
+  * After running `docker-compose up`, you may receive the following
+    error:
+
+    ```
+    ERROR: failed to create endpoint p5jsdocker_website_1 on network
+    bridge: Bind for 0.0.0.0:8000 failed: port is already allocated
+    ```
+    
+    If this happens, running the following might help:
+
+    ```
+    docker-machine stop default
+    docker-machine start default
+    docker-machine env
+    eval "$(docker-machine env default)"
+    docker-compose up
+    ```
 
 ## Uninstalling
 
